@@ -1,12 +1,14 @@
 // auth.js
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const crypto = require('crypto');
+
+// Generate a random secret key
 // Secret key for signing and verifying JWT tokens
-const secretKey = 'your-secret-key'; // Replace with your actual secret key
+const secretKey = crypto.randomBytes(32).toString('hex');
 
 // Function to create a new JWT token
 exports.createToken = (user) => {
-  const token = jwt.sign({ id: user.id, role: user.role }, secretKey, { expiresIn: '1h' });
+  const token = jwt.sign({ id: user.id, role: user.role }, secretKey, { expiresIn: '4h' });
   return token;
 };
 
@@ -38,7 +40,3 @@ exports.checkUserRole = (requiredRole) => {
     }
   };
 };
-//Function to compare hashed passwords
-// exports.comparePasswords = async (password, hashedPassword) => {
-//     return await bcrypt.compare(password, hashedPassword);
-// };

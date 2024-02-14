@@ -3,9 +3,22 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const db = require('./Config/db'); // Adjust the path based on your project structure
 const usersRoutes = require('./Routes/UsersRoutes');
+const clientRoutes = require('./Routes/ClientRoutes');
+const amenagementRoutes = require('./Routes/AmenagementsProposesRoutes');
+const anomaliesRoutes = require('./Routes/AnomalieRoutes');
+const codestandardRoutes = require('./Routes/CodeStandardRoutes');
+const donnestroconsRoutes = require('./Routes/DonnesTroconsRoutes');
+const ouvragehydrauliquesRoutes = require('./Routes/OuvragesHydrauliquesRoutes');
+const projetRoutes = require('./Routes/ProjetRoutes');
+const taskRoutes = require('./Routes/TaskRoutes');
 const authMiddleware = require('./authMiddleware/auth');
+const cors = require('cors');
 
 const app = express();
+
+app.use(cors({
+  origin: 'http://localhost:4200'
+}));
 
 // Connect to the database
 db.sync()
@@ -19,8 +32,20 @@ db.sync()
 // Middleware to parse JSON requests
 app.use(bodyParser.json());
 
+// Increase the payload size limit (e.g., 10MB)
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
+
 // Use routes
 app.use('/api', usersRoutes);
+app.use('/api', clientRoutes);
+app.use('/api',amenagementRoutes);
+app.use('/api',anomaliesRoutes);
+app.use('/api',codestandardRoutes);
+app.use('/api',donnestroconsRoutes);
+app.use('/api',ouvragehydrauliquesRoutes);
+app.use('/api',projetRoutes);
+app.use('/api',taskRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 3000;

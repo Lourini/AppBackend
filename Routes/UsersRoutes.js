@@ -8,16 +8,16 @@ const authMiddleware = require('../authMiddleware/auth');
 router.post('/users', userController.createUser);
 
 // Get all users (accessible to all authenticated users)
-router.get('/users', authMiddleware.authenticateToken, userController.getUsers);
+router.get('/users', userController.getUsers);
 
 // Get a specific user by ID (accessible to all authenticated users)
-router.get('/users/:id', authMiddleware.authenticateToken, userController.getUserById);
+router.get('/users/:id', userController.getUserById);
 
 // Update a user by ID (accessible only to users with the 'admin' role)
-router.put('/users/:id', authMiddleware.authenticateToken, authMiddleware.checkUserRole('admin'), userController.updateUser);
+router.put('/users/:id', userController.updateUser);
 
 // Delete a user by ID (accessible only to users with the 'admin' role)
-router.delete('/users/:id', authMiddleware.authenticateToken, authMiddleware.checkUserRole('admin'), userController.deleteUser);
+router.delete('/users/:id', userController.deleteUser);
 
 // New login route
 router.post('/login', userController.login);

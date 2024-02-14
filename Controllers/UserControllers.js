@@ -91,8 +91,7 @@ exports.deleteUser = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
-// Login function
+//Function Login
 exports.login = async (req, res) => {
   const { username, password } = req.body;
 
@@ -109,11 +108,22 @@ exports.login = async (req, res) => {
       return res.status(401).json({ error: 'Invalid username or password' });
     }
 
-    const token = authMiddleware.createToken(user);
-    res.status(200).json({ token });
+    const { password: excludedPassword, ...userData } = user.toJSON();
+
+    const token = authMiddleware.createToken(userData);
+    
+    // Set cookie expiration to 4 hours from now (in milliseconds)
+    const maxAge = 4 * 60 * 60 * 1000;
+
+    res.cookie('token', token, { httpOnly: true, maxAge }); // Set expiration time for the cookie
+    
+    res.status(200).json({ user: userData,token: token});
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+
+
 
