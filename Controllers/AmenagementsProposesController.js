@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../Config/db');
 const AmenagementsProposes = require('../model/AmenagementsProposes');
+const CodeStandard = require('../model/CodeStandard');
 
 // Function to create a new amenagement propose
 exports.createAmenagementPropose = async (req, res) => {
@@ -18,7 +19,10 @@ exports.getAmenagementsProposesByProjetId = async (req, res) => {
     const projetId = req.params.id;
   
     try {
-      const amenagementsProposes = await AmenagementsProposes.findAll({ where: { projetId } });
+      const amenagementsProposes = await AmenagementsProposes.findAll({ where: { projetId }, include: [
+        { model: CodeStandard, as: 'designation' },
+        { model: CodeStandard, as: 'amenagement' }
+      ] });
   
       if (!amenagementsProposes || amenagementsProposes.length === 0) {
         return res.status(404).json({ error: 'Amenagements proposes not found for the specified project ID' });

@@ -66,14 +66,14 @@ const Tasks = db.define('tasks', {
 Tasks.belongsTo(Projets, { foreignKey: 'projetId',}); // Each Task belongs to one project
 Projets.hasMany(Tasks, { foreignKey: 'projetId',}); 
 
-Tasks.belongsTo(Anomalies, { foreignKey: 'anomalieId'}); // Each Task may belong to one anomaly
-Anomalies.hasMany(Tasks, { foreignKey: 'anomalieId',}); 
+Tasks.belongsTo(Anomalies, { foreignKey: 'anomalieId', as: 'anomalieTask'}); // Each Task may belong to one anomaly
+Anomalies.hasMany(Tasks, { foreignKey: 'anomalieId', as: 'anomalieTask'}); 
 
-Tasks.belongsTo(OuvragesHydrauliques, { foreignKey: 'ouvrageId'}); // Each Task may belong to one ouvrage hydraulique
-OuvragesHydrauliques.hasMany(Tasks, { foreignKey: 'ouvrageId'});
+Tasks.belongsTo(OuvragesHydrauliques, { foreignKey: 'ouvrageId', as: 'ouvrageTask'}); // Each Task may belong to one ouvrage hydraulique
+OuvragesHydrauliques.hasMany(Tasks, { foreignKey: 'ouvrageId', as: 'ouvrageTask'});
 
-Tasks.belongsTo(AmenagementsProposes, { foreignKey: 'amenagementId'}); // Each Task may belong to one amenagement propose
-AmenagementsProposes.hasMany(Tasks, { foreignKey: 'amenagementId'});
+Tasks.belongsTo(AmenagementsProposes, { foreignKey: 'amenagementId', as: 'amenagementTask'}); // Each Task may belong to one amenagement propose
+AmenagementsProposes.hasMany(Tasks, { foreignKey: 'amenagementId', as: 'amenagementTask'});
 
 Tasks.belongsTo(Users, { foreignKey: 'creeePar', as: 'createdBy' }); // Each Task is created by one user
 Users.hasMany(Tasks, { foreignKey: 'creeePar', as: 'createdBy' });

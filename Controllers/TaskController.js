@@ -1,4 +1,8 @@
+const AmenagementsProposes = require('../model/AmenagementsProposes');
+const Anomalie = require('../model/Anomalie');
+const OuvragesHydrauliques = require('../model/OuvragesHydrauliques');
 const Task = require('../model/Tasks');
+const User = require('../model/User');
 
 // Function to create a new task
 exports.createTask = async (req, res) => {
@@ -16,7 +20,13 @@ exports.getTasksByProjetId = async (req, res) => {
     const projetId = req.params.id;
   
     try {
-      const tasks = await Task.findAll({ where: { projetId } });
+      const tasks = await Task.findAll({ where: { projetId },include : [
+        { model: User, as: 'createdBy' },
+        { model: AmenagementsProposes, as: 'amenagementTask' },
+        { model: Anomalie, as: 'anomalieTask' },
+        { model: OuvragesHydrauliques, as: 'ouvrageTask' },
+        { model: User, as: 'assignedTo' }
+      ] });
   
       if (!tasks || tasks.length === 0) {
         return res.status(404).json({ error: 'Tasks not found for the specified project ID' });

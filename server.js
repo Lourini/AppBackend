@@ -30,11 +30,20 @@ db.sync()
   });
 
 // Middleware to parse JSON requests
+
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb'}));
 app.use(bodyParser.json());
 
-// Increase the payload size limit (e.g., 10MB)
-app.use(bodyParser.json({ limit: '10mb' }));
-app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
+app.use(bodyParser.json({limit: '50mb'}));
+
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+    limit: '50mb',
+    parameterLimit: 50000,
+  }),
+);
 
 // Use routes
 app.use('/api', usersRoutes);
