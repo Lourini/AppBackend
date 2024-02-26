@@ -11,6 +11,7 @@ const donnestroconsRoutes = require('./Routes/DonnesTroconsRoutes');
 const ouvragehydrauliquesRoutes = require('./Routes/OuvragesHydrauliquesRoutes');
 const projetRoutes = require('./Routes/ProjetRoutes');
 const taskRoutes = require('./Routes/TaskRoutes');
+const eventRoutes = require('./Routes/EventRoutes')
 const authMiddleware = require('./authMiddleware/auth');
 const cors = require('cors');
 
@@ -55,6 +56,7 @@ app.use('/api',donnestroconsRoutes);
 app.use('/api',ouvragehydrauliquesRoutes);
 app.use('/api',projetRoutes);
 app.use('/api',taskRoutes);
+app.use('/api',eventRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 3000;

@@ -59,6 +59,14 @@ const Tasks = db.define('tasks', {
     statut: {
         type: Sequelize.ENUM('A faire', 'Traitee', 'En cours'),
         allowNull: false,
+    },
+    startDate: {
+        type: Sequelize.DATE,
+        allowNull: true,
+    },
+    endDate: {
+        type: Sequelize.DATE,
+        allowNull: true,
     }
 });
 
