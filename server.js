@@ -18,7 +18,7 @@ const cors = require('cors');
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:4200'
+  origin: 'http://185.166.39.250:4200'
 }));
 
 // Connect to the database
